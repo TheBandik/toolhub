@@ -8,6 +8,7 @@ export const manifest: ModuleManifest = {
 	category: 'health',
 	description: 'Трекер тренировок: теннис, бег, силовые',
 	routes: [
-		{ path: '/', label: 'Обзор', component: () => import('./pages/Overview.svelte') }
+		{ path: '/', label: 'Обзор', component: () => import('./pages/Overview.svelte') },
+		{ path: '/sessions', label: 'Сессии', component: () => import('./pages/Sessions.svelte') }
 	]
 };
