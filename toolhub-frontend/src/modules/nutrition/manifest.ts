@@ -3,7 +3,7 @@ import type { ModuleManifest } from '$lib/modules/types';
 
 export const manifest: ModuleManifest = {
 	id: 'nutrition',
-	name: 'Nutrition',
+	name: 'Питание',
 	icon: Apple,
 	category: 'health',
 	description: 'Трекер КБЖУ, клетчатка, вода',

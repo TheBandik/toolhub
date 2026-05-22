@@ -3,7 +3,7 @@ import type { ModuleManifest } from '$lib/modules/types';
 
 export const manifest: ModuleManifest = {
 	id: 'subscriptions',
-	name: 'Subscriptions',
+	name: 'Подписки',
 	icon: CreditCard,
 	category: 'finance',
 	description: 'Подписки и регулярные сервисы',

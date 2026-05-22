@@ -16,7 +16,7 @@ export type NavSection = {
 
 export const navSections: NavSection[] = [
 	{
-		items: [{ label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard }]
+		items: [{ label: 'Дашборд', href: '/dashboard', icon: LayoutDashboard }]
 	},
 	{
 		heading: 'Модули',
@@ -25,8 +25,14 @@ export const navSections: NavSection[] = [
 			href: `/modules/${m.id}`,
 			icon: m.icon
 		}))
-	},
-	{
-		items: [{ label: 'Настройки', href: '/settings', icon: Settings }]
 	}
+];
+
+export const navFooter: NavItem[] = [
+	{ label: 'Настройки', href: '/settings', icon: Settings }
+];
+
+export const allNavItems: NavItem[] = [
+	...navSections.flatMap((s) => s.items),
+	...navFooter
 ];

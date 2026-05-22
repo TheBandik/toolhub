@@ -3,7 +3,7 @@ import type { ModuleManifest } from '$lib/modules/types';
 
 export const manifest: ModuleManifest = {
 	id: 'workout',
-	name: 'Workout',
+	name: 'Тренировки',
 	icon: Dumbbell,
 	category: 'health',
 	description: 'Трекер тренировок: теннис, бег, силовые',
