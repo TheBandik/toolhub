@@ -1,7 +1,7 @@
 import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
-import Dumbbell from '@lucide/svelte/icons/dumbbell';
 import Settings from '@lucide/svelte/icons/settings';
 import type { Component } from 'svelte';
+import { moduleRegistry } from '$lib/modules/registry';
 
 export type NavItem = {
 	label: string;
@@ -20,7 +20,11 @@ export const navSections: NavSection[] = [
 	},
 	{
 		heading: 'Модули',
-		items: [{ label: 'Workout', href: '/modules/workout', icon: Dumbbell }]
+		items: moduleRegistry.map((m) => ({
+			label: m.name,
+			href: `/modules/${m.id}`,
+			icon: m.icon
+		}))
 	},
 	{
 		items: [{ label: 'Настройки', href: '/settings', icon: Settings }]
