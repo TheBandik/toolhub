@@ -9,6 +9,11 @@ export const manifest: ModuleManifest = {
 	description: 'Трекер тренировок: теннис, бег, силовые',
 	routes: [
 		{ path: '/', label: 'Обзор', component: () => import('./pages/Overview.svelte') },
-		{ path: '/sessions', label: 'Сессии', component: () => import('./pages/Sessions.svelte') }
+		{ path: '/sessions', label: 'Сессии', component: () => import('./pages/Sessions.svelte') },
+		{
+			path: '/settings',
+			label: 'Настройки',
+			component: () => import('./pages/WorkoutSettings.svelte')
+		}
 	]
 };
