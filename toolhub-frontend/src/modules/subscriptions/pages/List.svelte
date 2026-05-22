@@ -2,8 +2,9 @@
 	import * as Table from '$lib/components/ui/table';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Badge } from '$lib/components/ui/badge';
-	import { buttonVariants } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
+	import Plus from '@lucide/svelte/icons/plus';
 	import { subscriptionsStore } from '../store.svelte';
 	import {
 		CATEGORY_LABELS,
@@ -12,9 +13,19 @@
 		priceLabel,
 		isActive
 	} from '../types';
+	import AddEntryDialog from '../components/AddEntryDialog.svelte';
+
+	let dialogOpen = $state(false);
 </script>
 
 <div class="flex flex-col gap-6">
+	<div class="flex items-center justify-end">
+		<Button onclick={() => (dialogOpen = true)}>
+			<Plus class="size-4" />
+			Новая запись
+		</Button>
+	</div>
+
 	<div class="bg-card rounded-lg border">
 		<Table.Root>
 			<Table.Header>
@@ -78,3 +89,5 @@
 		</Table.Root>
 	</div>
 </div>
+
+<AddEntryDialog bind:open={dialogOpen} />

@@ -1,4 +1,6 @@
-import type { ServiceEntry, ServiceSettings } from './types';
+import type { Service, ServiceEntry, ServiceSettings, Subscription } from './types';
+
+type NewEntry = Omit<Subscription, 'id'> | Omit<Service, 'id'>;
 
 function daysAgo(days: number): string {
 	const d = new Date();
@@ -136,7 +138,7 @@ class SubscriptionsStore {
 		}
 	]);
 
-	add(e: Omit<ServiceEntry, 'id'>) {
+	add(e: NewEntry) {
 		this.entries.unshift({ ...e, id: crypto.randomUUID() } as ServiceEntry);
 	}
 
