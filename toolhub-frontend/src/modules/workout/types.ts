@@ -74,8 +74,17 @@ export type WorkoutSession = {
 	details?: WorkoutDetails;
 };
 
+export type ZoneMethod = 'max' | 'reserve';
+
+export const ZONE_METHOD_LABELS: Record<ZoneMethod, string> = {
+	max: 'По максимальному пульсу',
+	reserve: 'По резерву пульса'
+};
+
 export type WorkoutSettings = {
+	zoneMethod: ZoneMethod;
 	maxHR: number;
+	restHR: number;
 };
 
 export type ZoneRange = {
@@ -92,11 +101,19 @@ const ZONE_PERCENTS: ReadonlyArray<readonly [number, number]> = [
 	[0.9, 1.0]
 ];
 
-export function computeZones(maxHR: number): ZoneRange[] {
+export function computeZones(settings: WorkoutSettings): ZoneRange[] {
+	if (settings.zoneMethod === 'reserve') {
+		const range = settings.maxHR - settings.restHR;
+		return ZONE_PERCENTS.map(([lo, hi], i) => ({
+			zone: (i + 1) as ZoneRange['zone'],
+			min: Math.round(settings.restHR + range * lo),
+			max: Math.round(settings.restHR + range * hi)
+		}));
+	}
 	return ZONE_PERCENTS.map(([lo, hi], i) => ({
 		zone: (i + 1) as ZoneRange['zone'],
-		min: Math.round(maxHR * lo),
-		max: Math.round(maxHR * hi)
+		min: Math.round(settings.maxHR * lo),
+		max: Math.round(settings.maxHR * hi)
 	}));
 }
 

@@ -5,7 +5,7 @@
 
 	let { value = $bindable<ZoneMinutes>() }: { value: ZoneMinutes } = $props();
 
-	const zones = $derived(computeZones(workoutStore.settings.maxHR));
+	const zones = $derived(computeZones(workoutStore.settings));
 	const totalMin = $derived(value.reduce((s, m) => s + (m || 0), 0));
 </script>
 

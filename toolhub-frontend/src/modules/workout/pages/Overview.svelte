@@ -17,7 +17,7 @@
 	);
 	const last = $derived(workoutStore.sessions[0]);
 
-	const zones = $derived(computeZones(workoutStore.settings.maxHR));
+	const zones = $derived(computeZones(workoutStore.settings));
 	const lastZoneLabels = $derived(zones.map((z) => `Z${z.zone} ${z.min}–${z.max}`));
 </script>
 

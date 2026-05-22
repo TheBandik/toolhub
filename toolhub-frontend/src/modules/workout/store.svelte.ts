@@ -7,7 +7,7 @@ function daysAgo(days: number): string {
 }
 
 class WorkoutStore {
-	settings = $state<WorkoutSettings>({ maxHR: 190 });
+	settings = $state<WorkoutSettings>({ zoneMethod: 'max', maxHR: 190, restHR: 60 });
 
 	sessions = $state<WorkoutSession[]>([
 		{
