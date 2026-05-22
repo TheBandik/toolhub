@@ -93,14 +93,16 @@
 					{/if}
 				</div>
 
-				{#if last.zoneMinutes && last.zoneMinutes.some((m) => m > 0)}
+				{#if last.zoneSeconds && last.zoneSeconds.some((m) => m > 0)}
 					<div class="flex flex-col gap-1">
 						<div class="text-muted-foreground text-xs">Время в зонах</div>
 						<div class="grid grid-cols-5 gap-1 text-center text-xs">
-							{#each last.zoneMinutes as min, i (i)}
+							{#each last.zoneSeconds as sec, i (i)}
 								<div class="rounded-md border px-2 py-1">
 									<div class="text-muted-foreground text-[10px]">{lastZoneLabels[i]}</div>
-									<div class="font-medium">{min} мин</div>
+									<div class="font-medium">
+										{Math.floor(sec / 60)}:{String(sec % 60).padStart(2, '0')}
+									</div>
 								</div>
 							{/each}
 						</div>

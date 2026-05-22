@@ -19,7 +19,7 @@ class WorkoutStore {
 			maxHR: 172,
 			activeCalories: 480,
 			rpe: 6,
-			zoneMinutes: [5, 20, 25, 8, 2],
+			zoneSeconds: [300, 1200, 1500, 480, 120],
 			note: 'Тренировка подачи',
 			details: {
 				type: 'tennis',
@@ -39,7 +39,7 @@ class WorkoutStore {
 			activeCalories: 380,
 			distanceKm: 5.2,
 			rpe: 7,
-			zoneMinutes: [2, 5, 18, 8, 2],
+			zoneSeconds: [120, 300, 1080, 480, 120],
 			note: 'Пробежка по парку',
 			details: {
 				type: 'running',
@@ -57,7 +57,7 @@ class WorkoutStore {
 			maxHR: 155,
 			activeCalories: 290,
 			rpe: 8,
-			zoneMinutes: [15, 25, 8, 2, 0],
+			zoneSeconds: [900, 1500, 480, 120, 0],
 			note: 'Спина + бицепс',
 			details: {
 				type: 'strength',
@@ -77,7 +77,7 @@ class WorkoutStore {
 			maxHR: 178,
 			activeCalories: 560,
 			rpe: 7,
-			zoneMinutes: [3, 18, 35, 15, 4],
+			zoneSeconds: [180, 1080, 2100, 900, 240],
 			details: {
 				type: 'tennis',
 				kind: 'match',
@@ -97,7 +97,7 @@ class WorkoutStore {
 			activeCalories: 450,
 			distanceKm: 6.4,
 			rpe: 8,
-			zoneMinutes: [1, 3, 12, 18, 6],
+			zoneSeconds: [60, 180, 720, 1080, 360],
 			note: '6 км интервалы',
 			details: {
 				type: 'running',

@@ -57,7 +57,28 @@ export type StrengthDetails = {
 
 export type WorkoutDetails = TennisDetails | RunningDetails | StrengthDetails;
 
-export type ZoneMinutes = [number, number, number, number, number];
+export type ZoneSeconds = [number, number, number, number, number];
+
+export const ZONE_COLOR_BG: Record<1 | 2 | 3 | 4 | 5, string> = {
+	1: 'bg-sky-500',
+	2: 'bg-green-500',
+	3: 'bg-yellow-400',
+	4: 'bg-orange-500',
+	5: 'bg-red-500'
+};
+
+export const RPE_COLOR_BG: Record<number, string> = {
+	1: 'bg-emerald-500',
+	2: 'bg-green-500',
+	3: 'bg-lime-500',
+	4: 'bg-yellow-400',
+	5: 'bg-yellow-500',
+	6: 'bg-amber-500',
+	7: 'bg-orange-500',
+	8: 'bg-orange-600',
+	9: 'bg-red-500',
+	10: 'bg-red-700'
+};
 
 export type WorkoutSession = {
 	id: string;
@@ -69,7 +90,7 @@ export type WorkoutSession = {
 	activeCalories?: number;
 	distanceKm?: number;
 	rpe?: number;
-	zoneMinutes?: ZoneMinutes;
+	zoneSeconds?: ZoneSeconds;
 	note?: string;
 	details?: WorkoutDetails;
 };

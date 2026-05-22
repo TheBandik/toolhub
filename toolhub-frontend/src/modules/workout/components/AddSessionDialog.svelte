@@ -9,13 +9,14 @@
 		TENNIS_KIND_LABELS,
 		TENNIS_COURT_LABELS,
 		TENNIS_SURFACE_LABELS,
+		RPE_COLOR_BG,
 		emptyDetails,
 		type WorkoutType,
 		type WorkoutDetails,
 		type TennisKind,
 		type TennisCourt,
 		type TennisSurface,
-		type ZoneMinutes
+		type ZoneSeconds
 	} from '../types';
 	import ZonesInput from './ZonesInput.svelte';
 	import StrengthExercisesInput from './StrengthExercisesInput.svelte';
@@ -32,7 +33,7 @@
 	let maxHR = $state<number | null>(null);
 	let activeCalories = $state<number | null>(null);
 	let rpe = $state<number | null>(null);
-	let zoneMinutes = $state<ZoneMinutes>([0, 0, 0, 0, 0]);
+	let zoneSeconds = $state<ZoneSeconds>([0, 0, 0, 0, 0]);
 	let note = $state('');
 	let details = $state<WorkoutDetails>(emptyDetails('tennis'));
 
@@ -50,7 +51,7 @@
 		maxHR = null;
 		activeCalories = null;
 		rpe = null;
-		zoneMinutes = [0, 0, 0, 0, 0];
+		zoneSeconds = [0, 0, 0, 0, 0];
 		note = '';
 		details = emptyDetails('tennis');
 	}
@@ -59,7 +60,7 @@
 		return v == null || !Number.isFinite(v) ? undefined : v;
 	}
 
-	function hasZoneMinutes(z: ZoneMinutes): boolean {
+	function hasZoneSeconds(z: ZoneSeconds): boolean {
 		return z.some((m) => Number(m) > 0);
 	}
 
@@ -96,7 +97,7 @@
 			maxHR: num(maxHR),
 			activeCalories: num(activeCalories),
 			rpe: num(rpe),
-			zoneMinutes: hasZoneMinutes(zoneMinutes) ? ([...zoneMinutes] as ZoneMinutes) : undefined,
+			zoneSeconds: hasZoneSeconds(zoneSeconds) ? ([...zoneSeconds] as ZoneSeconds) : undefined,
 			note: note.trim() || undefined,
 			details: cleanedDetails(details)
 		});
@@ -169,21 +170,23 @@
 				</div>
 			</div>
 
-			<ZonesInput bind:value={zoneMinutes} />
+			<ZonesInput bind:value={zoneSeconds} />
 
 			<div class="flex flex-col gap-2">
 				<Label>RPE — субъективная нагрузка (1–10)</Label>
-				<div class="flex flex-wrap gap-1">
+				<div class="flex gap-1">
 					{#each Array.from({ length: 10 }, (_, i) => i + 1) as n (n)}
-						<Button
+						<button
 							type="button"
-							variant={rpe === n ? 'default' : 'outline'}
-							size="sm"
-							class="w-8"
 							onclick={() => (rpe = rpe === n ? null : n)}
+							class="flex h-9 flex-1 items-center justify-center rounded-md text-sm font-semibold text-white transition-all {RPE_COLOR_BG[
+								n
+							]} {rpe === n
+								? 'ring-foreground ring-2 ring-offset-2'
+								: 'opacity-50 hover:opacity-100'}"
 						>
 							{n}
-						</Button>
+						</button>
 					{/each}
 				</div>
 			</div>
