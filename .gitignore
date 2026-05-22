@@ -13,3 +13,8 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Local notes
+/task.md
+*.local
+*.local.*
