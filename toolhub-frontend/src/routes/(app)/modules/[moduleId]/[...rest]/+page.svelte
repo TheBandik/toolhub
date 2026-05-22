@@ -50,22 +50,24 @@
 		</div>
 
 		{#if manifest.routes.length > 1}
-			<div class="flex gap-1 border-b">
-				{#each manifest.routes as r (r.path)}
-					{#if r.label}
-						<a
-							href={hrefFor(r.path)}
-							class={cn(
-								'-mb-px border-b-2 px-3 py-2 text-sm transition-colors',
-								route.path === r.path
-									? 'border-foreground text-foreground'
-									: 'text-muted-foreground hover:text-foreground border-transparent'
-							)}
-						>
-							{r.label}
-						</a>
-					{/if}
-				{/each}
+			<div class="-mx-4 overflow-x-auto border-b sm:mx-0">
+				<div class="flex gap-1 px-4 sm:px-0">
+					{#each manifest.routes as r (r.path)}
+						{#if r.label}
+							<a
+								href={hrefFor(r.path)}
+								class={cn(
+									'-mb-px shrink-0 border-b-2 px-3 py-2 text-sm transition-colors',
+									route.path === r.path
+										? 'border-foreground text-foreground'
+										: 'text-muted-foreground hover:text-foreground border-transparent'
+								)}
+							>
+								{r.label}
+							</a>
+						{/if}
+					{/each}
+				</div>
 			</div>
 		{/if}
 

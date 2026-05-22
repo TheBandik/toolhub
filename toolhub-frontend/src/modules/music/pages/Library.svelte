@@ -61,7 +61,7 @@
 		</div>
 	</div>
 
-	<div class="bg-card rounded-lg border">
+	<div class="bg-card overflow-x-auto rounded-lg border">
 		<Table.Root>
 			<Table.Header>
 				<Table.Row>

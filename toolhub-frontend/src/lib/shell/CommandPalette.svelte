@@ -29,10 +29,11 @@
 <button
 	type="button"
 	onclick={openPalette}
-	class="text-muted-foreground hover:bg-accent hover:text-accent-foreground inline-flex h-9 items-center gap-2 rounded-md border border-input bg-background px-3 text-sm transition-colors"
+	class="text-muted-foreground hover:bg-accent hover:text-accent-foreground border-input bg-background inline-flex h-9 items-center gap-2 rounded-md border px-2 text-sm transition-colors sm:px-3"
+	aria-label="Поиск"
 >
 	<Search class="size-4" />
-	<span>Поиск...</span>
+	<span class="hidden sm:inline">Поиск...</span>
 	<kbd
 		class="bg-muted text-muted-foreground ml-2 hidden rounded px-1.5 py-0.5 font-mono text-[10px] sm:inline-block"
 	>
