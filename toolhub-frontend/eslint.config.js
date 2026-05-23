@@ -39,6 +39,10 @@ export default defineConfig(
 	{
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
-		rules: {}
+		rules: {
+			// Button is a generic UI primitive that accepts any href (including external links),
+			// so SvelteKit-specific navigation resolve is not applicable here.
+			'svelte/no-navigation-without-resolve': 'off'
+		}
 	}
 );
