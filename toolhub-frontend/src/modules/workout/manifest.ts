@@ -15,5 +15,32 @@ export const manifest: ModuleManifest = {
 			label: 'Настройки',
 			component: () => import('./pages/WorkoutSettings.svelte')
 		}
+	],
+	widgets: [
+		{
+			id: 'workout.week-sessions',
+			label: 'Тренировок за неделю',
+			component: () => import('./widgets/WeekSessions.svelte')
+		},
+		{
+			id: 'workout.week-minutes',
+			label: 'Минут за неделю',
+			component: () => import('./widgets/WeekMinutes.svelte')
+		},
+		{
+			id: 'workout.week-calories',
+			label: 'Ккал за неделю',
+			component: () => import('./widgets/WeekCalories.svelte')
+		},
+		{
+			id: 'workout.week-distance',
+			label: 'Км за неделю',
+			component: () => import('./widgets/WeekDistance.svelte')
+		},
+		{
+			id: 'workout.last',
+			label: 'Последняя тренировка',
+			component: () => import('./widgets/LastWorkout.svelte')
+		}
 	]
 };

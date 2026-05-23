@@ -8,6 +8,12 @@ export type ModuleRoute = {
 	component: () => Promise<{ default: Component }>;
 };
 
+export type DashboardWidget = {
+	id: string;
+	label: string;
+	component: () => Promise<{ default: Component }>;
+};
+
 export type ModuleManifest = {
 	id: string;
 	name: string;
@@ -15,4 +21,5 @@ export type ModuleManifest = {
 	category: ModuleCategory;
 	description?: string;
 	routes: ModuleRoute[];
+	widgets?: DashboardWidget[];
 };

@@ -15,5 +15,17 @@ export const manifest: ModuleManifest = {
 			label: 'Настройки',
 			component: () => import('./pages/MusicSettings.svelte')
 		}
+	],
+	widgets: [
+		{
+			id: 'music.track-count',
+			label: 'Треков в библиотеке',
+			component: () => import('./widgets/TrackCount.svelte')
+		},
+		{
+			id: 'music.total-duration',
+			label: 'Длительность библиотеки',
+			component: () => import('./widgets/TotalDuration.svelte')
+		}
 	]
 };
