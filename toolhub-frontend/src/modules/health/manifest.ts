@@ -9,9 +9,8 @@ export const manifest: ModuleManifest = {
 	description: 'Визиты к врачам, анализы, стоматология, файлы',
 	routes: [
 		{ path: '/', label: 'Обзор', component: () => import('./pages/Overview.svelte') },
-		{ path: '/visits', label: 'Визиты', component: () => import('./pages/Visits.svelte') },
+		{ path: '/visits', label: 'Приёмы', component: () => import('./pages/Visits.svelte') },
 		{ path: '/labs', label: 'Анализы', component: () => import('./pages/Labs.svelte') },
-		{ path: '/dentistry', label: 'Стоматология', component: () => import('./pages/Dentistry.svelte') },
 		{ path: '/files', label: 'Файлы', component: () => import('./pages/Files.svelte') }
 	],
 	widgets: [
