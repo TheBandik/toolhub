@@ -66,6 +66,15 @@ const SEED: Omit<Track, 'id'>[] = [
 
 class MusicStore {
 	tracks = $state<Track[]>(SEED.map((t, i) => ({ ...t, id: String(i + 1) })));
+
+	add(t: Omit<Track, 'id'>) {
+		this.tracks.push({ ...t, id: crypto.randomUUID() });
+	}
+
+	remove(id: string) {
+		const idx = this.tracks.findIndex((x) => x.id === id);
+		if (idx >= 0) this.tracks.splice(idx, 1);
+	}
 }
 
 export const musicStore = new MusicStore();

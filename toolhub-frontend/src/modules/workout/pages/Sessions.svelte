@@ -10,18 +10,30 @@
 	import { WORKOUT_TYPE_LABELS, RPE_COLOR_BG } from '../types';
 	import AddSessionDialog from '../components/AddSessionDialog.svelte';
 	import SessionDetails from '../components/SessionDetails.svelte';
+	import { type WorkoutSession } from '../types';
 
 	let dialogOpen = $state(false);
+	let editingSession = $state<WorkoutSession | undefined>(undefined);
 	let expandedId = $state<string | null>(null);
 
 	function toggle(id: string) {
 		expandedId = expandedId === id ? null : id;
 	}
+
+	function openAdd() {
+		editingSession = undefined;
+		dialogOpen = true;
+	}
+
+	function openEdit(session: WorkoutSession) {
+		editingSession = session;
+		dialogOpen = true;
+	}
 </script>
 
 <div class="flex flex-col gap-6">
 	<div class="flex items-center justify-end">
-		<Button onclick={() => (dialogOpen = true)}>
+		<Button onclick={openAdd}>
 			<Plus class="size-4" />
 			Новая тренировка
 		</Button>
@@ -91,6 +103,9 @@
 									<MoreHorizontal class="size-4" />
 								</DropdownMenu.Trigger>
 								<DropdownMenu.Content align="end">
+									<DropdownMenu.Item onSelect={() => openEdit(session)}>
+										Редактировать
+									</DropdownMenu.Item>
 									<DropdownMenu.Item onSelect={() => workoutStore.remove(session.id)}>
 										Удалить
 									</DropdownMenu.Item>
@@ -111,4 +126,4 @@
 	</div>
 </div>
 
-<AddSessionDialog bind:open={dialogOpen} />
+<AddSessionDialog bind:open={dialogOpen} session={editingSession} />

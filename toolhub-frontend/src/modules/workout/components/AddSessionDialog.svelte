@@ -13,6 +13,7 @@
 		emptyDetails,
 		type WorkoutType,
 		type WorkoutDetails,
+		type WorkoutSession,
 		type TennisKind,
 		type TennisCourt,
 		type TennisSurface,
@@ -21,7 +22,10 @@
 	import ZonesInput from './ZonesInput.svelte';
 	import StrengthExercisesInput from './StrengthExercisesInput.svelte';
 
-	let { open = $bindable() }: { open: boolean } = $props();
+	let { open = $bindable(), session = undefined }: { open: boolean; session?: WorkoutSession } =
+		$props();
+
+	const isEdit = $derived(!!session);
 
 	const today = () => new Date().toISOString().slice(0, 10);
 
@@ -56,6 +60,27 @@
 		details = emptyDetails('tennis');
 	}
 
+	function loadSession(s: WorkoutSession) {
+		date = s.date;
+		type = s.type;
+		durationMin = s.durationMin;
+		distanceKm = s.distanceKm ?? null;
+		avgHR = s.avgHR ?? null;
+		maxHR = s.maxHR ?? null;
+		activeCalories = s.activeCalories ?? null;
+		rpe = s.rpe ?? null;
+		zoneSeconds = s.zoneSeconds ? ([...s.zoneSeconds] as ZoneSeconds) : [0, 0, 0, 0, 0];
+		note = s.note ?? '';
+		details = s.details ? ({ ...s.details } as WorkoutDetails) : emptyDetails(s.type);
+	}
+
+	$effect(() => {
+		if (open) {
+			if (session) loadSession(session);
+			else reset();
+		}
+	});
+
 	function num(v: number | null | undefined): number | undefined {
 		return v == null || !Number.isFinite(v) ? undefined : v;
 	}
@@ -88,7 +113,7 @@
 
 	function submit(e: SubmitEvent) {
 		e.preventDefault();
-		workoutStore.add({
+		const data = {
 			date,
 			type,
 			durationMin: Number(durationMin) || 0,
@@ -100,8 +125,12 @@
 			zoneSeconds: hasZoneSeconds(zoneSeconds) ? ([...zoneSeconds] as ZoneSeconds) : undefined,
 			note: note.trim() || undefined,
 			details: cleanedDetails(details)
-		});
-		reset();
+		};
+		if (isEdit && session) {
+			workoutStore.update(session.id, data);
+		} else {
+			workoutStore.add(data);
+		}
 		open = false;
 	}
 </script>
@@ -109,7 +138,7 @@
 <Dialog.Root bind:open>
 	<Dialog.Content class="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
 		<Dialog.Header>
-			<Dialog.Title>Новая тренировка</Dialog.Title>
+			<Dialog.Title>{isEdit ? 'Редактировать тренировку' : 'Новая тренировка'}</Dialog.Title>
 		</Dialog.Header>
 		<form onsubmit={submit} class="flex flex-col gap-5">
 			<div class="grid grid-cols-2 gap-3">
@@ -310,7 +339,7 @@
 
 			<Dialog.Footer>
 				<Button type="button" variant="outline" onclick={() => (open = false)}>Отмена</Button>
-				<Button type="submit">Добавить</Button>
+				<Button type="submit">{isEdit ? 'Сохранить' : 'Добавить'}</Button>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

@@ -117,6 +117,11 @@ class WorkoutStore {
 		if (idx >= 0) this.sessions.splice(idx, 1);
 	}
 
+	update(id: string, updated: Omit<WorkoutSession, 'id'>) {
+		const idx = this.sessions.findIndex((x) => x.id === id);
+		if (idx >= 0) this.sessions[idx] = { ...updated, id };
+	}
+
 	updateSettings(patch: Partial<WorkoutSettings>) {
 		Object.assign(this.settings, patch);
 	}

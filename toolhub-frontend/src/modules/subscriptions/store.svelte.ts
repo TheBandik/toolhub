@@ -147,6 +147,11 @@ class SubscriptionsStore {
 		if (idx >= 0) this.entries.splice(idx, 1);
 	}
 
+	update(id: string, updated: NewEntry) {
+		const idx = this.entries.findIndex((x) => x.id === id);
+		if (idx >= 0) this.entries[idx] = { ...updated, id } as ServiceEntry;
+	}
+
 	updateSettings(patch: Partial<ServiceSettings>) {
 		Object.assign(this.settings, patch);
 	}

@@ -3,6 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import Check from '@lucide/svelte/icons/check';
 	import { subscriptionsStore } from '../store.svelte';
 	import {
 		CURRENCIES,
@@ -14,11 +15,13 @@
 		type Currency,
 		type BillingCycle,
 		type TimeUnit,
-		type ServiceCategory
+		type ServiceCategory,
+		type ServiceEntry
 	} from '../types';
 
-	let { open = $bindable() }: { open: boolean } = $props();
+	let { open = $bindable(), entry = undefined }: { open: boolean; entry?: ServiceEntry } = $props();
 
+	const isEdit = $derived(!!entry);
 	const today = () => new Date().toISOString().slice(0, 10);
 
 	type Kind = 'subscription' | 'service';
@@ -68,6 +71,33 @@
 		perUnit = 'day';
 	}
 
+	function loadEntry(e: ServiceEntry) {
+		kind = e.kind;
+		name = e.name;
+		icon = e.icon;
+		iconManual = true;
+		category = e.category;
+		currency = e.currency;
+		startDate = e.startDate;
+		endDate = e.endDate ?? '';
+		note = e.note ?? '';
+		if (e.kind === 'subscription') {
+			price = e.price;
+			cycle = e.cycle;
+			autoRenew = e.autoRenew;
+		} else {
+			rate = e.rate;
+			perUnit = e.perUnit;
+		}
+	}
+
+	$effect(() => {
+		if (open) {
+			if (entry) loadEntry(entry);
+			else reset();
+		}
+	});
+
 	function submit(e: SubmitEvent) {
 		e.preventDefault();
 		const base = {
@@ -79,23 +109,16 @@
 			endDate: endDate || undefined,
 			note: note.trim() || undefined
 		};
-		if (kind === 'subscription') {
-			subscriptionsStore.add({
-				...base,
-				kind: 'subscription',
-				price: Number(price) || 0,
-				cycle,
-				autoRenew
-			});
+		const updated =
+			kind === 'subscription'
+				? { ...base, kind: 'subscription' as const, price: Number(price) || 0, cycle, autoRenew }
+				: { ...base, kind: 'service' as const, rate: Number(rate) || 0, perUnit };
+
+		if (isEdit && entry) {
+			subscriptionsStore.update(entry.id, updated);
 		} else {
-			subscriptionsStore.add({
-				...base,
-				kind: 'service',
-				rate: Number(rate) || 0,
-				perUnit
-			});
+			subscriptionsStore.add(updated);
 		}
-		reset();
 		open = false;
 	}
 </script>
@@ -103,7 +126,7 @@
 <Dialog.Root bind:open>
 	<Dialog.Content class="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
 		<Dialog.Header>
-			<Dialog.Title>Новая запись</Dialog.Title>
+			<Dialog.Title>{isEdit ? 'Редактировать запись' : 'Новая запись'}</Dialog.Title>
 		</Dialog.Header>
 		<form onsubmit={submit} class="flex flex-col gap-5">
 			<div class="flex flex-col gap-2">
@@ -204,10 +227,22 @@
 						{/each}
 					</div>
 				</div>
-				<label class="flex cursor-pointer items-center gap-2 text-sm">
-					<input type="checkbox" class="size-4" bind:checked={autoRenew} />
+				<button
+					type="button"
+					onclick={() => (autoRenew = !autoRenew)}
+					class="flex cursor-pointer items-center gap-2 self-start rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+				>
+					<span
+						class="flex size-4 shrink-0 items-center justify-center rounded border transition-colors {autoRenew
+							? 'bg-primary border-primary text-primary-foreground'
+							: 'border-input'}"
+					>
+						{#if autoRenew}
+							<Check class="size-3" />
+						{/if}
+					</span>
 					Автопродление
-				</label>
+				</button>
 			{:else}
 				<div class="grid grid-cols-[1fr_8rem] gap-3">
 					<div class="flex flex-col gap-2">
@@ -265,7 +300,7 @@
 
 			<Dialog.Footer>
 				<Button type="button" variant="outline" onclick={() => (open = false)}>Отмена</Button>
-				<Button type="submit">Добавить</Button>
+				<Button type="submit">{isEdit ? 'Сохранить' : 'Добавить'}</Button>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>
