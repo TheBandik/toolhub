@@ -29,6 +29,9 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
