@@ -16,5 +16,6 @@ Thumbs.db
 
 # Local notes
 /task.md
+/notes/
 *.local
 *.local.*
